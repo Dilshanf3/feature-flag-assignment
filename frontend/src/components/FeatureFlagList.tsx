@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FeatureFlag } from '@/types';
 import { featureFlagService } from '@/lib/featureFlags';
-import { Edit2, Trash2, BarChart3, Zap, Calendar, Percent, Users, AlertCircle, ToggleLeft, ToggleRight, Camera, Search, LayoutDashboard, Sparkles, Smartphone, TrendingUp } from 'lucide-react';
+import { Edit2, Trash2, BarChart3, Zap, Calendar, Percent, Users, AlertCircle, Camera, Search, LayoutDashboard, Sparkles, Smartphone, TrendingUp } from 'lucide-react';
 import { strings } from '@/lib/strings';
 import { Card, Badge, Button } from '@/components/ui';
 
@@ -49,10 +49,10 @@ export default function FeatureFlagList({ onEdit, onViewAnalytics }: FeatureFlag
       return { icon: Camera, color: 'from-purple-500 to-pink-500' };
     }
     if (key.includes('search') || key.includes('analytics')) {
-      return { icon: Search, color: 'from-blue-500 to-cyan-500' };
+      return { icon: Search, color: 'from-primary-500 to-primary-600' };
     }
     if (key.includes('dashboard') || key.includes('beta')) {
-      return { icon: LayoutDashboard, color: 'from-indigo-500 to-purple-500' };
+      return { icon: LayoutDashboard, color: 'from-primary-400 to-primary-600' };
     }
     if (key.includes('ai') || key.includes('assessment')) {
       return { icon: Sparkles, color: 'from-amber-500 to-orange-500' };
@@ -155,9 +155,9 @@ export default function FeatureFlagList({ onEdit, onViewAnalytics }: FeatureFlag
                     </div>
                     
                     {flag.starts_at && (
-                      <div className="flex items-center gap-1.5 px-2 py-1 bg-blue-50 rounded text-xs">
-                        <Calendar className="w-3.5 h-3.5 text-blue-600" />
-                        <span className="text-blue-700">{new Date(flag.starts_at).toLocaleDateString()}</span>
+                      <div className="flex items-center gap-1.5 px-2 py-1 bg-primary-50 rounded text-xs">
+                        <Calendar className="w-3.5 h-3.5 text-primary-600" />
+                        <span className="text-primary-700">{new Date(flag.starts_at).toLocaleDateString()}</span>
                       </div>
                     )}
                   </div>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/lib/auth';
-import { Eye, EyeOff, Car, Shield, Lock } from 'lucide-react';
+import { Eye, EyeOff, Car } from 'lucide-react';
 import { Button, Input, Card, Container } from '@/components/ui';
 import { strings } from '@/lib/strings';
 
@@ -47,7 +47,7 @@ export default function LoginPage() {
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl"></div>
         <div className="relative z-10 flex flex-col justify-center px-16 text-white max-w-xl">
           <div className="mb-12">
             <div className="flex items-center gap-4 mb-8">
@@ -64,24 +64,6 @@ export default function LoginPage() {
             </p>
           </div>
           <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="p-2 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 mt-1">
-                <Shield className="w-6 h-6 text-primary-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-1">{strings.securePlatform}</h3>
-                <p className="text-neutral-300 text-sm leading-relaxed">{strings.securePlatformDesc}</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="p-2 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 mt-1">
-                <Lock className="w-6 h-6 text-primary-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-1">{strings.dynamicFeatures}</h3>
-                <p className="text-neutral-300 text-sm leading-relaxed">{strings.dynamicFeaturesDesc}</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -131,7 +113,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type={showPassword ? 'text' : 'password'}
-                    className="w-full border border-neutral-300 rounded-xl px-4 py-3 pr-11 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    className="w-full border border-neutral-300 rounded-xl px-4 py-3 pr-11 text-neutral-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                     placeholder={strings.passwordPlaceholder}
                     required
                   />

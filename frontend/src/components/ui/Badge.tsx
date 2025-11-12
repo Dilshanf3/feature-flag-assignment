@@ -11,7 +11,7 @@ export default function Badge({ variant = 'neutral', children, className = '' }:
     success: 'bg-green-100 text-green-800',
     warning: 'bg-yellow-100 text-yellow-900',
     danger: 'bg-red-100 text-damage-critical',
-    info: 'bg-blue-100 text-damage-info',
+    info: 'bg-primary-100 text-primary-800',
     neutral: 'bg-neutral-100 text-neutral-800',
   };
 

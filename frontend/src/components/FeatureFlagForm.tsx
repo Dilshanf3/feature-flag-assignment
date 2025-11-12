@@ -5,6 +5,7 @@ import { FeatureFlag } from '@/types';
 import { featureFlagService } from '@/lib/featureFlags';
 import { Input, Textarea, Select, Button } from '@/components/ui';
 import { AlertCircle } from 'lucide-react';
+import { strings } from '@/lib/strings';
 
 interface FeatureFlagFormData {
   name: string;
@@ -78,11 +79,11 @@ export default function FeatureFlagForm({ flag, onSuccess, onCancel }: FeatureFl
     const newErrors: Record<string, string> = {};
     
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = strings.nameRequired;
     }
     
     if (!formData.key.trim()) {
-      newErrors.key = 'Key is required';
+      newErrors.key = strings.keyRequired;
     } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.key)) {
       newErrors.key = 'Key must contain only letters, numbers, underscores, and hyphens';
     }
@@ -109,7 +110,7 @@ export default function FeatureFlagForm({ flag, onSuccess, onCancel }: FeatureFl
       }
       onSuccess();
     } catch {
-      setError('Failed to save feature flag');
+      setError(strings.errorSaveFlag);
     } finally {
       setLoading(false);
     }
@@ -127,11 +128,11 @@ export default function FeatureFlagForm({ flag, onSuccess, onCancel }: FeatureFl
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
           <Input
-            label="Name"
+            label={strings.name}
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            placeholder="e.g., Advanced Analytics Dashboard"
+            placeholder={strings.namePlaceholder}
             required
           />
           {errors.name && (
@@ -141,29 +142,29 @@ export default function FeatureFlagForm({ flag, onSuccess, onCancel }: FeatureFl
 
         <div className="md:col-span-2">
           <Input
-            label="Key"
+            label={strings.key}
             name="key"
             value={formData.key}
             onChange={handleInputChange}
             disabled={!!flag}
-            placeholder="e.g., advanced_analytics"
+            placeholder={strings.keyPlaceholder}
             required
           />
           {errors.key && (
             <p className="text-red-600 text-xs mt-1.5">{errors.key}</p>
           )}
           {!flag && (
-            <p className="text-neutral-500 text-xs mt-1.5">Use lowercase letters, numbers, and underscores only</p>
+            <p className="text-neutral-500 text-xs mt-1.5">{strings.keyHint}</p>
           )}
         </div>
 
         <div className="md:col-span-2">
           <Textarea
-            label="Description"
+            label={strings.description}
             name="description"
             value={formData.description}
             onChange={handleInputChange}
-            placeholder="Explain what this feature does and when it should be enabled"
+            placeholder={strings.descriptionPlaceholder}
             rows={3}
           />
         </div>
@@ -179,32 +180,32 @@ export default function FeatureFlagForm({ flag, onSuccess, onCancel }: FeatureFl
             />
             <div>
               <label className="text-sm font-medium text-neutral-900 cursor-pointer">
-                Enable this feature
+                {strings.enableFeature}
               </label>
-              <p className="text-xs text-neutral-600 mt-0.5">Feature will be active based on rollout settings</p>
+              <p className="text-xs text-neutral-600 mt-0.5">{strings.enableFeatureHint}</p>
             </div>
           </div>
         </div>
 
         <div className="md:col-span-2">
           <Select
-            label="Rollout Strategy"
+            label={strings.rolloutStrategy}
             name="rollout_type"
             value={formData.rollout_type}
             onChange={handleInputChange}
           >
-            <option value="boolean">Full Deployment - All users immediately</option>
-            <option value="percentage">Progressive Rollout - Gradual user adoption</option>
-            <option value="scheduled">Scheduled Release - Time-window activation</option>
-            <option value="user_list">Targeted Access - Specific user groups</option>
+            <option value="boolean">{strings.rolloutFullDeployment}</option>
+            <option value="percentage">{strings.rolloutProgressive}</option>
+            <option value="scheduled">{strings.rolloutScheduled}</option>
+            <option value="user_list">{strings.rolloutTargeted}</option>
           </Select>
         </div>
       </div>
 
       {formData.rollout_type === 'percentage' && (
-        <div className="p-5 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="p-5 bg-primary-50 border border-primary-200 rounded-lg">
           <label className="block text-sm font-medium text-neutral-900 mb-3">
-            Rollout Percentage
+            {strings.rolloutPercentageSection}
           </label>
           <div className="flex items-center gap-4">
             <input
@@ -224,55 +225,55 @@ export default function FeatureFlagForm({ flag, onSuccess, onCancel }: FeatureFl
                 max="100"
                 value={formData.rollout_value?.percentage || 0}
                 onChange={handleInputChange}
-                className="w-20 px-3 py-2 text-center border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-20 px-3 py-2 text-center border border-neutral-300 rounded-lg text-neutral-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
               <span className="text-sm font-medium text-neutral-700">%</span>
             </div>
           </div>
-          <p className="text-xs text-neutral-600 mt-3">Feature will be enabled for this percentage of users</p>
+          <p className="text-xs text-neutral-600 mt-3">{strings.rolloutPercentageHint}</p>
         </div>
       )}
 
       {formData.rollout_type === 'user_list' && (
         <div className="p-5 bg-purple-50 border border-purple-200 rounded-lg">
           <Input
-            label="User Email Addresses"
+            label={strings.userEmailAddresses}
             name="rollout_value.user_ids"
             value={formData.rollout_value?.user_ids || ''}
             onChange={handleInputChange}
-            placeholder="user1@example.com, user2@example.com"
+            placeholder={strings.userEmailPlaceholder}
           />
-          <p className="text-xs text-neutral-600 mt-2">Separate multiple email addresses with commas</p>
+          <p className="text-xs text-neutral-600 mt-2">{strings.userEmailHint}</p>
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 bg-neutral-50 border border-neutral-200 rounded-lg">
         <div>
           <label className="block text-sm font-medium text-neutral-900 mb-2">
-            Start Date
+            {strings.startDate}
           </label>
           <input
             name="starts_at"
             type="datetime-local"
             value={formData.starts_at}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-neutral-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-neutral-900 mb-2">
-            End Date
+            {strings.endDate}
           </label>
           <input
             name="ends_at"
             type="datetime-local"
             value={formData.ends_at}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-neutral-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
           />
         </div>
         <div className="md:col-span-2">
-          <p className="text-xs text-neutral-600">Schedule when this feature should be active (optional)</p>
+          <p className="text-xs text-neutral-600">{strings.scheduleHint}</p>
         </div>
       </div>
 
@@ -282,14 +283,14 @@ export default function FeatureFlagForm({ flag, onSuccess, onCancel }: FeatureFl
           onClick={onCancel}
           variant="secondary"
         >
-          Cancel
+          {strings.cancel}
         </Button>
         <Button
           type="submit"
           variant="primary"
           isLoading={loading}
         >
-          {loading ? 'Saving...' : flag ? 'Update Flag' : 'Create Flag'}
+          {loading ? strings.saving : flag ? strings.updateFlag : strings.createFlag}
         </Button>
       </div>
     </form>

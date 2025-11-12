@@ -5,6 +5,7 @@ import { carReportService } from '@/lib/carReports';
 import { useFeatureFlag } from '@/hooks/useFeatureFlag';
 import { Camera } from 'lucide-react';
 import { FEATURE_FLAGS } from '@/lib/constants';
+import { strings } from '@/lib/strings';
 
 interface CarReportFormData {
   car_model: string;
@@ -59,13 +60,13 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
     const newErrors: Record<string, string> = {};
     
     if (!formData.car_model.trim()) {
-      newErrors.car_model = 'Car model is required';
+      newErrors.car_model = strings.carModelValidation;
     }
     
     if (!formData.description.trim()) {
-      newErrors.description = 'Description is required';
+      newErrors.description = strings.descriptionValidation;
     } else if (formData.description.trim().length < 10) {
-      newErrors.description = 'Description must be at least 10 characters';
+      newErrors.description = strings.descriptionMinLength;
     }
     
     setErrors(newErrors);
@@ -102,14 +103,14 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Car Model *
+          {strings.carModelRequired}
         </label>
         <input
           name="car_model"
           value={formData.car_model}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="e.g., Toyota Camry 2020"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-neutral-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+          placeholder={strings.enterCarModel}
         />
         {errors.car_model && (
           <p className="text-red-500 text-sm mt-1">{errors.car_model}</p>
@@ -118,32 +119,32 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Damage Type *
+          {strings.damageTypeRequired}
         </label>
         <select
           name="damage_type"
           value={formData.damage_type}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-neutral-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
-          <option value="minor">Cosmetic - Surface scratches, minor paint chips</option>
-          <option value="moderate">Structural - Body panel damage, requires repair</option>
-          <option value="severe">Critical - Frame damage, extensive bodywork needed</option>
-          <option value="total_loss">Catastrophic - Vehicle declared total loss</option>
+          <option value="minor">{strings.damageMinor}</option>
+          <option value="moderate">{strings.damageModerate}</option>
+          <option value="severe">{strings.damageSevere}</option>
+          <option value="total_loss">{strings.damageTotalLoss}</option>
         </select>
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Description *
+          {strings.descriptionRequired}
         </label>
         <textarea
           name="description"
           value={formData.description}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-neutral-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500"
           rows={4}
-          placeholder="Describe the damage in detail..."
+          placeholder={strings.describeDamage}
         />
         {errors.description && (
           <p className="text-red-500 text-sm mt-1">{errors.description}</p>
@@ -153,7 +154,7 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
       {uploadPhotosEnabled && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Photo Upload (Optional)
+            {strings.photoUploadOptional}
           </label>
           <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors">
             <div className="space-y-1 text-center">
@@ -161,7 +162,7 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
                 <div className="space-y-2">
                   <img
                     src={photoPreview}
-                    alt="Preview"
+                    alt={strings.previewAlt}
                     className="mx-auto h-32 w-auto rounded-lg object-cover"
                   />
                   <button
@@ -172,7 +173,7 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
                     }}
                     className="text-sm text-red-600 hover:text-red-500"
                   >
-                    Remove Photo
+                    {strings.removePhoto}
                   </button>
                 </div>
               ) : (
@@ -181,9 +182,9 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
                   <div className="flex text-sm text-gray-600">
                     <label
                       htmlFor="photo-upload"
-                      className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500"
+                      className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500"
                     >
-                      <span>Upload a photo</span>
+                      <span>{strings.uploadPhotoLabel}</span>
                       <input
                         id="photo-upload"
                         type="file"
@@ -192,9 +193,9 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
                         className="sr-only"
                       />
                     </label>
-                    <p className="pl-1">or drag and drop</p>
+                    <p className="pl-1">{strings.dragAndDropPhoto}</p>
                   </div>
-                  <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                  <p className="text-xs text-gray-500">{strings.photoFormats}</p>
                 </div>
               )}
             </div>
@@ -208,14 +209,14 @@ export default function CarReportForm({ onSuccess, onCancel }: CarReportFormProp
           onClick={onCancel}
           className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
         >
-          Cancel
+          {strings.cancel}
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+          className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 disabled:opacity-50"
         >
-          {loading ? 'Submitting...' : 'Submit Report'}
+          {loading ? strings.submitting : strings.submitReport}
         </button>
       </div>
     </form>

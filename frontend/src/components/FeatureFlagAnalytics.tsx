@@ -64,14 +64,14 @@ export default function FeatureFlagAnalytics({ flagKey, onClose }: FeatureFlagAn
       {analytics && !loading && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 p-6 border border-blue-200">
+            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary-50 to-primary-100 p-6 border border-primary-200">
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="text-sm font-medium text-blue-700 mb-1">Total Decisions</div>
-                  <div className="text-3xl font-bold text-blue-900">{analytics.total_decisions}</div>
+                  <div className="text-sm font-medium text-primary-700 mb-1">Total Decisions</div>
+                  <div className="text-3xl font-bold text-primary-900">{analytics.total_decisions}</div>
                 </div>
-                <div className="p-3 bg-blue-200 rounded-lg">
-                  <Activity className="w-6 h-6 text-blue-700" />
+                <div className="p-3 bg-primary-200 rounded-lg">
+                  <Activity className="w-6 h-6 text-primary-700" />
                 </div>
               </div>
             </div>
