@@ -18,7 +18,7 @@ This application showcases how feature flags can be implemented in a real-world 
 The easiest way to get started is with our one-command deployment:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Dilshanf3/feature-flag-assignment.git
 cd feature-flag-assignment
 chmod +x deploy.sh
 ./deploy.sh
