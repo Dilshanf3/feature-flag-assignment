@@ -454,6 +454,8 @@ If you encounter issues not covered here:
 feature-flag-assignment/
 ├── README.md                    # This documentation
 ├── deploy.sh                    # One-command deployment script
+├── storybook.sh                 # Storybook launcher script (Linux/Mac)
+├── storybook.bat                # Storybook launcher script (Windows)
 ├── backend/                     # Laravel API application
 │   ├── app/
 │   │   ├── Http/Controllers/    # API endpoint handlers
@@ -465,14 +467,25 @@ feature-flag-assignment/
 │   │   └── seeders/            # Sample data
 │   └── routes/api.php          # API route definitions
 ├── frontend/                    # Next.js React application
+│   ├── .storybook/             # Storybook configuration
+│   │   ├── main.ts             # Storybook main configuration
+│   │   ├── preview.ts          # Global Storybook settings
+│   │   └── vitest.setup.ts     # Testing configuration
 │   └── src/
 │       ├── app/                # Pages and layouts
 │       ├── components/         # Reusable UI components
+│       │   └── ui/             # UI component library
+│       │       ├── Button.stories.tsx      # Button component stories
+│       │       ├── Input.stories.tsx       # Input component stories
+│       │       ├── Card.stories.tsx        # Card component stories
+│       │       ├── Modal.stories.tsx       # Modal component stories
+│       │       └── Badge.stories.tsx       # Badge component stories
 │       ├── hooks/              # Custom React hooks
-│       └── lib/                # Utilities and API clients
+│       ├── lib/                # Utilities and API clients
+│       └── Welcome.stories.tsx # Storybook welcome page story
 └── environments/
     ├── local/                   # Local development configuration
-    │   ├── docker-compose.yml  # Container orchestration
+    │   ├── docker-compose.yml  # Container orchestration (includes Storybook service)
     │   ├── docker.env          # Docker environment variables
     │   ├── backend.env         # Laravel configuration
     │   └── frontend.env        # Next.js configuration
