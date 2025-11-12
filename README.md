@@ -324,19 +324,3 @@ This application was designed as a demonstration and learning tool. Potential im
 
 That's it! All other dependencies are handled through Docker containers.
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes and test thoroughly
-4. Commit your changes: `git commit -m 'Add some feature'`
-5. Push to the branch: `git push origin feature-name`
-6. Submit a pull request
-
-## License
-
-This project is created for educational and demonstration purposes. Feel free to use it as a learning resource or starting point for your own feature flag implementation.
-
----
-
-**Need Help?** Check the troubleshooting section above or review the Docker logs using `docker compose logs -f` to diagnose any issues.
