@@ -38,6 +38,122 @@ This will set up everything you need including:
 - **Admin:** `admin@example.com` / `password`
 - **User:** `user@example.com` / `password`
 
+## Quick Reference
+
+**Essential Commands:**
+```bash
+# 🚀 Start full application
+./deploy.sh
+
+# 🎨 Start Storybook only
+./deploy.sh storybook
+
+# 📊 View logs
+cd environments/local && docker-compose logs -f
+
+# 🔄 Restart services
+cd environments/local && docker-compose restart
+
+# 🛑 Stop everything
+cd environments/local && docker-compose down
+
+# 🗑️ Clean reset (removes all data)
+cd environments/local && docker-compose down -v
+```
+
+**Application URLs:**
+- 🌐 **Frontend:** [localhost:3000](http://localhost:3000)
+- 🔌 **Backend API:** [localhost:8000](http://localhost:8000)
+- 📖 **Storybook:** [localhost:6006](http://localhost:6006) *(when running)*
+
+## Component Documentation (Storybook)
+
+The project includes comprehensive component documentation with **Storybook**. View and interact with all UI components in isolation:
+
+**Run Storybook:**
+```bash
+# Option 1: Using Docker (Recommended - Isolated Environment)
+./deploy.sh storybook
+# or
+./storybook.sh  # Linux/Mac
+./storybook.bat # Windows
+
+# Option 2: Using Docker Compose directly
+cd environments/local
+docker-compose --env-file docker.env up --build storybook
+
+# Option 3: Directly with npm (requires Node.js 18+ and dependencies installed)
+cd frontend
+npm install
+npm run storybook
+```
+
+**Step-by-step Storybook Setup:**
+
+1. **Prerequisites Check:**
+   ```bash
+   # Ensure Docker is running (for Docker methods)
+   docker --version
+   docker-compose --version
+   
+   # OR ensure Node.js is installed (for npm method)
+   node --version  # Should be 18+
+   npm --version
+   ```
+
+2. **Quick Start with Docker:**
+   ```bash
+   # From project root directory
+   chmod +x deploy.sh storybook.sh  # Linux/Mac only
+   ./deploy.sh storybook
+   ```
+
+3. **Alternative: Local Development:**
+   ```bash
+   cd frontend
+   npm install        # Install dependencies
+   npm run storybook  # Start Storybook server
+   ```
+
+4. **Verify Installation:**
+   - Open browser to [http://localhost:6006](http://localhost:6006)
+   - You should see the Welcome page with component navigation
+   - Browse through "UI Components" in the sidebar
+
+**Troubleshooting Storybook:**
+```bash
+# If port 6006 is in use
+lsof -i :6006  # Find process using port (Linux/Mac)
+netstat -ano | findstr :6006  # Windows
+
+# Clean restart
+cd frontend
+rm -rf node_modules package-lock.json  # Clean dependencies
+npm install
+npm run storybook
+
+# Docker clean restart
+docker-compose down
+docker-compose --env-file docker.env up --build storybook
+```
+
+**Access Storybook:**
+- **Component Library:** [http://localhost:6006](http://localhost:6006)
+
+**Available Component Stories:**
+- **Button** - All variants, sizes, and states
+- **Input** - Form inputs with various types
+- **Card** - Content containers and layouts
+- **Modal** - Dialog and overlay components
+- **Badge** - Status and category indicators
+
+Storybook provides:
+- 🎨 Interactive component playground
+- 📖 Auto-generated documentation
+- ♿ Accessibility testing
+- 📱 Responsive design testing
+- 🔧 Props controls and examples
+
 ## Technology Stack
 
 **Backend (API Layer):**
@@ -235,6 +351,102 @@ docker compose exec backend php artisan migrate:fresh --seed
 cd environments/local
 docker compose down -v
 ```
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+**🐳 Docker Issues:**
+```bash
+# Docker not running
+# Solution: Start Docker Desktop and ensure it's running
+
+# Port conflicts (3000, 8000, 6006 already in use)
+# Solution: Stop conflicting services
+docker ps                    # Check running containers
+docker stop <container_id>   # Stop conflicting container
+lsof -i :3000               # Find process on port (Linux/Mac)
+netstat -ano | findstr :3000 # Find process on port (Windows)
+
+# Permission denied on deploy.sh
+chmod +x deploy.sh storybook.sh  # Make scripts executable (Linux/Mac)
+```
+
+**📖 Storybook Specific Issues:**
+```bash
+# "Failed to fetch dynamically imported module" error
+cd frontend
+rm -rf node_modules package-lock.json .storybook-static
+npm install
+npm run storybook
+
+# Components not rendering properly
+# Ensure Tailwind CSS is loaded in preview.ts
+# Check: frontend/.storybook/preview.ts should import globals.css
+
+# Stories not appearing in sidebar
+# Check: frontend/.storybook/main.ts stories path configuration
+# Verify: .stories.tsx files are in src/components/ directory
+```
+
+**🔄 Service Restart Issues:**
+```bash
+# Clean restart all services
+cd environments/local
+docker-compose down -v
+docker-compose --env-file docker.env up --build
+
+# Reset database only
+docker exec feature-flag-backend php artisan migrate:fresh --seed
+
+# Clear frontend build cache
+cd frontend
+rm -rf .next node_modules
+npm install
+```
+
+**🌐 Network and Access Issues:**
+```bash
+# Frontend not accessible
+# Check: http://localhost:3000
+# Verify: docker-compose logs frontend
+
+# Backend API not responding
+# Check: http://localhost:8000/api/health
+# Verify: docker-compose logs backend
+
+# Storybook not loading
+# Check: http://localhost:6006
+# Verify: Storybook service is running
+```
+
+**Environment Variables:**
+```bash
+# Missing or incorrect environment configuration
+# Verify: environments/local/docker.env exists
+# Check: All required variables are set
+# Ensure: File paths in docker-compose.yml are correct
+```
+
+### Getting Help
+
+If you encounter issues not covered here:
+
+1. **Check service logs:**
+   ```bash
+   cd environments/local
+   docker-compose logs [service-name]
+   ```
+
+2. **Verify all services are running:**
+   ```bash
+   docker ps
+   ```
+
+3. **Clean slate restart:**
+   ```bash
+   ./deploy.sh  # Full deployment restart
+   ```
 
 ## Project Structure
 

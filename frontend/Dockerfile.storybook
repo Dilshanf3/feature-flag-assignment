@@ -1,0 +1,22 @@
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose Storybook port
+EXPOSE 6006
+
+# Build Storybook for production (optional)
+# RUN npm run build-storybook
+
+# Start Storybook development server on all interfaces
+CMD ["npm", "run", "storybook:docker"]

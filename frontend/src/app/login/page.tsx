@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/lib/auth';
-import { Eye, EyeOff, Car } from 'lucide-react';
+import { Eye, EyeOff, Car, Copy, Check } from 'lucide-react';
 import { Button, Input, Card, Container } from '@/components/ui';
 import { strings } from '@/lib/strings';
 
@@ -13,7 +13,18 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [copiedItem, setCopiedItem] = useState<string | null>(null);
   const router = useRouter();
+
+  const copyToClipboard = async (text: string, type: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedItem(type);
+      setTimeout(() => setCopiedItem(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,16 +162,72 @@ export default function LoginPage() {
                     <div className="text-xs font-bold text-neutral-700 tracking-wide">{strings.adminAccount}</div>
                     <div className="px-2 py-0.5 bg-primary-600 text-white text-xs font-semibold rounded">{strings.fullAccess}</div>
                   </div>
-                  <div className="text-sm text-neutral-900 font-mono mb-1">admin@example.com</div>
-                  <div className="text-sm text-neutral-600 font-mono">password</div>
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="text-sm text-neutral-900 font-mono">admin@example.com</div>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard('admin@example.com', 'admin-email')}
+                      className="p-1.5 hover:bg-neutral-200 rounded-md transition-colors group"
+                      title="Copy email"
+                    >
+                      {copiedItem === 'admin-email' ? (
+                        <Check className="w-4 h-4 text-green-600" />
+                      ) : (
+                        <Copy className="w-4 h-4 text-neutral-500 group-hover:text-neutral-700" />
+                      )}
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-neutral-600 font-mono">password</div>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard('password', 'admin-password')}
+                      className="p-1.5 hover:bg-neutral-200 rounded-md transition-colors group"
+                      title="Copy password"
+                    >
+                      {copiedItem === 'admin-password' ? (
+                        <Check className="w-4 h-4 text-green-600" />
+                      ) : (
+                        <Copy className="w-4 h-4 text-neutral-500 group-hover:text-neutral-700" />
+                      )}
+                    </button>
+                  </div>
                 </div>
                 <div className="p-4 bg-neutral-50 border border-neutral-200 rounded-xl hover:border-neutral-300 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-xs font-bold text-neutral-700 tracking-wide">{strings.regularUserLabel}</div>
                     <div className="px-2 py-0.5 bg-neutral-400 text-white text-xs font-semibold rounded">{strings.standard}</div>
                   </div>
-                  <div className="text-sm text-neutral-900 font-mono mb-1">user@example.com</div>
-                  <div className="text-sm text-neutral-600 font-mono">password</div>
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="text-sm text-neutral-900 font-mono">user@example.com</div>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard('user@example.com', 'user-email')}
+                      className="p-1.5 hover:bg-neutral-200 rounded-md transition-colors group"
+                      title="Copy email"
+                    >
+                      {copiedItem === 'user-email' ? (
+                        <Check className="w-4 h-4 text-green-600" />
+                      ) : (
+                        <Copy className="w-4 h-4 text-neutral-500 group-hover:text-neutral-700" />
+                      )}
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-neutral-600 font-mono">password</div>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard('password', 'user-password')}
+                      className="p-1.5 hover:bg-neutral-200 rounded-md transition-colors group"
+                      title="Copy password"
+                    >
+                      {copiedItem === 'user-password' ? (
+                        <Check className="w-4 h-4 text-green-600" />
+                      ) : (
+                        <Copy className="w-4 h-4 text-neutral-500 group-hover:text-neutral-700" />
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>

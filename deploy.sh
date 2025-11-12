@@ -212,6 +212,10 @@ show_completion_info() {
     echo "   Frontend: http://localhost:3000"
     echo "   Backend API: http://localhost:8000"
     echo ""
+    print_success "Additional Services:"
+    echo "   Storybook: Run './deploy.sh storybook' or use ./storybook.sh"
+    echo "   Storybook URL: http://localhost:6006 (when running)"
+    echo ""
     print_success "Default Login Credentials:"
     echo "   Admin: admin@example.com / password"
     echo "   User: user@example.com / password"
@@ -220,6 +224,7 @@ show_completion_info() {
     echo "   Stop services: cd environments/local && docker-compose down"
     echo "   View logs: cd environments/local && docker-compose logs -f"
     echo "   Restart: cd environments/local && docker-compose restart"
+    echo "   Storybook only: ./deploy.sh storybook"
     echo ""
     print_warning "Note: Initial startup may take a few extra minutes for frontend compilation"
 }
@@ -238,6 +243,15 @@ handle_error() {
     
     exit 1
 }
+
+# Deployment mode selection
+if [ "$1" = "storybook" ]; then
+    echo "🎨 Starting Storybook only..."
+    cd environments/local
+    print_status "Building and starting Storybook container..."
+    docker-compose --env-file docker.env up --build storybook
+    exit 0
+fi
 
 # Main deployment flow
 main() {
