@@ -42,29 +42,29 @@ This will set up everything you need including:
 
 **Essential Commands:**
 ```bash
-# 🚀 Start full application
+# Start full application
 ./deploy.sh
 
-# 🎨 Start Storybook only
+# Start Storybook only
 ./deploy.sh storybook
 
-# 📊 View logs
+#  View logs
 cd environments/local && docker-compose logs -f
 
-# 🔄 Restart services
+#  Restart services
 cd environments/local && docker-compose restart
 
-# 🛑 Stop everything
+#  Stop everything
 cd environments/local && docker-compose down
 
-# 🗑️ Clean reset (removes all data)
+#  Clean reset (removes all data)
 cd environments/local && docker-compose down -v
 ```
 
 **Application URLs:**
-- 🌐 **Frontend:** [localhost:3000](http://localhost:3000)
-- 🔌 **Backend API:** [localhost:8000](http://localhost:8000)
-- 📖 **Storybook:** [localhost:6006](http://localhost:6006) *(when running)*
+-  **Frontend:** [localhost:3000](http://localhost:3000)
+-  **Backend API:** [localhost:8000](http://localhost:8000)
+-  **Storybook:** [localhost:6006](http://localhost:6006) *(when running)*
 
 ## Component Documentation (Storybook)
 
@@ -148,11 +148,10 @@ docker-compose --env-file docker.env up --build storybook
 - **Badge** - Status and category indicators
 
 Storybook provides:
-- 🎨 Interactive component playground
-- 📖 Auto-generated documentation
-- ♿ Accessibility testing
-- 📱 Responsive design testing
-- 🔧 Props controls and examples
+- Interactive component playground
+- Accessibility testing
+- Responsive design testing
+
 
 ## Technology Stack
 
@@ -356,7 +355,7 @@ docker compose down -v
 
 ### Common Issues and Solutions
 
-**🐳 Docker Issues:**
+**Docker Issues:**
 ```bash
 # Docker not running
 # Solution: Start Docker Desktop and ensure it's running
@@ -405,7 +404,7 @@ rm -rf .next node_modules
 npm install
 ```
 
-**🌐 Network and Access Issues:**
+**Network and Access Issues:**
 ```bash
 # Frontend not accessible
 # Check: http://localhost:3000
